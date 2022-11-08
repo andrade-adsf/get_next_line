@@ -6,13 +6,13 @@
 /*   By: feandrad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 20:29:19 by feandrad          #+#    #+#             */
-/*   Updated: 2022/10/24 21:33:21 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:30:50 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
-	int	i;
+	static int	i;
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -20,33 +20,33 @@ int	ft_strlen(char *str)
 
 void	swap_dest(char *dst, int dst_size)
 {
-	char	swp;
+	static char	swp;
 
 	swp = malloc(1 + ft_strlen(dst) * sizeof(char));
 	swp = dst;
 	free(dst);
 	dst = malloc(1 + dst_size * sizeof(char));
-	
+	ft_strlcpy(dst, swp);
 }
 
 void	buffercat(char *dst, const char *buffer)
 {
-	int	i;
-	int dst_end;
-	int	dst_size;
-	char	*swp;
+	static int	i = 0;
+	static int	dst_size = ft_strlen(dst) + ft_strlen(buffer);
 	
-// variable init
-	dst_size = ft_strlen(dst) + ft_strlen(buffer);
-	dst_end = ft_strlen(dst) + 1;
+	swap_dest(dst, dst_size);
+	ft_strlcpy(dst, buffer, ft_strlen(dst) + 1);
+}
+
+void	ft_strlcpy(char *dst, const char *src, int size)
+{
+	static int i;
+
 	i = 0;
-// dst swap
-	swp = dst;
-	free(dst);
-	dst = malloc(1 + dst_size * sizeof(char));
-	while(buffer[i] != '\0')
+	while(src[size] != '\0')
 	{
-		dst[dst_size + i] = buffer[i];
+		dst[size] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
 }
