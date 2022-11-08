@@ -6,7 +6,7 @@
 /*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:13:53 by coder             #+#    #+#             */
-/*   Updated: 2022/10/24 20:23:27 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:53:47 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,21 @@
 char	*get_next_line(int fd)
 {
 	char	*buffer;
-	char	*lastline;
-	static int	i_buffer = 0;
 	int		not_end;
+	char	*result;
+	int		line_end
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	not_end = 0;
-	while (not_end == 0)
+	if (!buffer)
+		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	while (not_end == 1)
 	{
-		read(fd, BUFFER_SIZE, 1);
+		read(fd, buffer, BUFFER_SIZE);
+		if (!result)
+			result = malloc((BUFFER_SIZE +1) * sizeof(char));
+		buffercat(result, buffer);
+		line_end = ft_strlen(result)
+		if	(line_end == '\n' || line_end == '\0')
+			not_end == 0;
 	}
-
-
-
-
-// salva o que foi lido pelo buffer em uma variavel e retorna
-	while (buffer[i_buffer] != '\0' || buffer[i_buffer])
-		i_buffer++;
-	lastline = malloc((sizeof(char) * i_buffer) + 1);
-	lastline[i_buffer + 1] = '\0';
-	while (i_buffer >= 0)
-
-		lastline[i_buffer] = buffer[i_buffer];
-		i_buffer--;
-	}
-	return (lastline);
-}
-
-char	*read_file(int fd)
-{
-	read(fd, buffer, BUFFER_SIZE);
-	
-	while (not_end == 0)
-	{
-		read_file(fd);
-	}
+	return (result);
 }
