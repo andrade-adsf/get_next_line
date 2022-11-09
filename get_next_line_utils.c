@@ -6,7 +6,7 @@
 /*   By: feandrad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 20:29:19 by feandrad          #+#    #+#             */
-/*   Updated: 2022/11/08 20:30:50 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:01:18 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ void	ft_strlcpy(char *dst, const char *src, int size)
 		i++;
 	}
 	dst[i] = '\0';
+}
+
+int	check_endline(char str)
+{
+	int	i;
+
+	while (str[i] != '\n' || str[i] != '\0')
+		i++;
+	if (str[i] === '\0')
+		return (0);
+	else
+		return (1);
 }
