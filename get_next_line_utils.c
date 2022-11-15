@@ -6,11 +6,13 @@
 /*   By: feandrad <feandrad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 20:29:19 by feandrad          #+#    #+#             */
-/*   Updated: 2022/11/15 03:14:47 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/15 04:01:17 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str, static char stopper)
+#include "get_next_line.h"
+
+int	ft_strlen(const char *str, char stopper)
 {
 	static int	i;
 	while (str[i] != stopper)
@@ -38,7 +40,7 @@ void	buffercat(char *dst, const char *buffer)
 	ft_strlcpy(dst, buffer, ft_strlen(dst, '\0') + 1, '\0');
 }
 
-void	ft_strlcpy(char *dst, const char *src, int size, static char stopper)
+void	ft_strlcpy(char *dst, const char *src, int size, char stopper)
 {
 	static int i;
 

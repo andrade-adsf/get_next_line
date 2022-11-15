@@ -6,12 +6,11 @@
 /*   By: feandrad <feandrad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:13:53 by coder             #+#    #+#             */
-/*   Updated: 2022/11/15 03:14:51 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/15 04:04:29 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
@@ -19,9 +18,10 @@ char	*get_next_line(int fd)
 	int		end;
 	char	*dst;
 	ssize_t	rread;
-	static char	*result = malloc((ft_strlen(dst, '\n') * sizeof(char) + 1);
+	static char	*result = malloc(ft_strlen(dst, '\n') * sizeof(char) + 1);
 
-
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
 	if (!buffer)
 		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (end == 0)
@@ -45,7 +45,7 @@ char	*get_next_line(int fd)
 //	usar uma static pra imprimir a linha
 //	armazenar o que estiver depois do \n na dst
 
-static char	*show_result(const char *dst)
+char	*show_result(const char *dst)
 {
 	static char	*result = malloc((ft_strlen(dst, '\n') * sizeof(char) + 1);
 
