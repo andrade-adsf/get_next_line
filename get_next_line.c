@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: feandrad <feandrad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:13:53 by coder             #+#    #+#             */
-/*   Updated: 2022/11/09 19:01:56 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/15 03:14:51 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*get_next_line(int fd)
 	int		end;
 	char	*dst;
 	ssize_t	rread;
+	static char	*result = malloc((ft_strlen(dst, '\n') * sizeof(char) + 1);
+
 
 	if (!buffer)
 		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
@@ -34,7 +36,19 @@ char	*get_next_line(int fd)
 		else
 			end = check_endline(dst);
 	}
-	return (end);
+	return (show_result);
 }
 
-char	find_line()
+// char	find_line()
+
+
+//	usar uma static pra imprimir a linha
+//	armazenar o que estiver depois do \n na dst
+
+static char	*show_result(const char *dst)
+{
+	static char	*result = malloc((ft_strlen(dst, '\n') * sizeof(char) + 1);
+
+	ft_strlcpy(result, dst, '\n')
+	return (result)
+}
