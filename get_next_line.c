@@ -6,7 +6,7 @@
 /*   By: feandrad <feandrad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:13:53 by coder             #+#    #+#             */
-/*   Updated: 2022/11/15 04:04:29 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/18 23:40:14 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,96 @@
 
 char	*get_next_line(int fd)
 {
-	char	*buffer;
-	int		end;
-	char	*dst;
-	ssize_t	rread;
-	static char	*result = malloc(ft_strlen(dst, '\n') * sizeof(char) + 1);
+	static char	*aux;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (!buffer)
-		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (end == 0)
+	line = aux;
+	if (!aux)
+		aux = (char *) ft_calloc(1, 1);
+	if (read_file(&aux, &line, fd))
+		return (line);
+	if (!*aux)
 	{
-		rread = read(fd, buffer, BUFFER_SIZE);
-		buffer[rread] = '\0';
-		if (!dst)
-			dst = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		buffercat(dst, buffer);
-		if (rread <=  0)
-			return (NULL);
-		else
-			end = check_endline(dst);
+		free(aux);
+		aux = NULL;
+		return (NULL);
 	}
-	return (show_result);
+	line = aux;
+	aux = NULL;
+	return (line);
 }
 
-// char	find_line()
-
-
-//	usar uma static pra imprimir a linha
-//	armazenar o que estiver depois do \n na dst
-
-char	*show_result(const char *dst)
+int	read_file(char **aux_p, char **line_p, int fd)
 {
-	static char	*result = malloc((ft_strlen(dst, '\n') * sizeof(char) + 1);
+	char		*buffer;
+	ssize_t		i;
+	ssize_t		chars_read;
 
-	ft_strlcpy(result, dst, '\n')
-	return (result)
+	i = 0;
+	chars_read = BUFFER_SIZE;
+	while (chars_read > 0)
+	{
+		while ((*aux_p)[i] != '\n' && (*aux_p)[i])
+			i++;
+		if ((*aux_p)[i] == '\n')
+		{
+			*line_p = *aux_p;
+			*aux_p = ft_substr(*line_p, i + 1, ft_strlen(*line_p + i + 1));
+			ft_bzero(*line_p + i + 1, ft_strlen(*line_p + i + 1));
+			return (1);
+		}
+		buffer = (char *) ft_calloc(BUFFER_SIZE + 1, 1);
+		chars_read = read(fd, buffer, BUFFER_SIZE);
+		*line_p = ft_strjoin(*aux_p, buffer);
+		free(*aux_p);
+		*aux_p = *line_p;
+		free(buffer);
+	}
+	return (0);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	total_size;
+
+	if (dstsize > ft_strlen(dst))
+	{
+		total_size = ft_strlen(dst) + ft_strlen(src);
+		while (*dst)
+		{
+			dst++;
+			dstsize--;
+		}
+		i = 0;
+		while (i < (dstsize - 1) && src && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	else
+	{
+		total_size = ft_strlen(src) + dstsize;
+	}
+	return (total_size);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*dup;
+	int		i;
+
+	dup = malloc ((ft_strlen(s1) + 1) * sizeof (char));
+	i = 0;
+	while (s1[i])
+	{
+		dup[i] = s1[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

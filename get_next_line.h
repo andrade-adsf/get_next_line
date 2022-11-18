@@ -13,8 +13,8 @@ int	ft_strlen(const char *str, char stopper);
 void	swap_dest(char *dst, int dst_size);
 void	buffercat(char *dst, const char *buffer);
 void	ft_strlcpy(char *dst, const char *src, int size, char stopper);
-int	check_endline(char str);
+int	check_endline(char *str);
 char	*get_next_line(int fd);
-char	*show_result(const char *dst);
+char	*show_result(char *dst);
 
 #endif
