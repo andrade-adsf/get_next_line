@@ -6,61 +6,83 @@
 /*   By: feandrad <feandrad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 20:29:19 by feandrad          #+#    #+#             */
-/*   Updated: 2022/11/15 04:01:17 by feandrad         ###   ########.fr       */
+/*   Updated: 2022/11/18 23:37:21 by feandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str, char stopper)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	static int	i;
-	while (str[i] != stopper)
+	char			*sub;
+	unsigned int	i;
+	unsigned int	slen;
+	unsigned int	size;
+
+	slen = ft_strlen(s);
+	if (start >= slen)
+		size = 1;
+	else if (len >= slen)
+		size = (slen - start) + 1;
+	else
+		size = len + 1;
+	sub = malloc (size);
+	if (!sub)
+		return (NULL);
+	i = 0;
+	while (((start + i) < slen) && (i < len))
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
+}
+
+size_t	ft_strlen(const char *c)
+{
+	size_t	i;
+
+	i = 0;
+	while (c && c[i])
 		i++;
 	return (i);
 }
 
-void	swap_dest(char *dst, int dst_size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	static char	swp;
+	unsigned int	size;
+	char			*join;
 
-	swp = malloc(1 + ft_strlen(dst, '\0') * sizeof(char));
-	swp = dst;
-	free(dst);
-	dst = malloc(1 + dst_size * sizeof(char));
-	ft_strlcpy(dst, swp, '\0');
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	join = (char *) ft_calloc (size, sizeof(char));
+	if (!join)
+		return (NULL);
+	ft_strlcat(join, s1, size);
+	ft_strlcat(join, s2, size);
+	return (join);
 }
 
-void	buffercat(char *dst, const char *buffer)
+void	*ft_calloc(size_t count, size_t size)
 {
-	static int	i = 0;
-	static int	dst_size = ft_strlen(dst, '\0') + ft_strlen(buffer, '\0');
-	
-	swap_dest(dst, dst_size);
-	ft_strlcpy(dst, buffer, ft_strlen(dst, '\0') + 1, '\0');
+	void	*mem;
+
+	if (size > (~(1 << 31) / count))
+		return (NULL);
+	mem = malloc (size * count);
+	if (mem != NULL)
+		ft_bzero(mem, (count * size));
+	return (mem);
 }
 
-void	ft_strlcpy(char *dst, const char *src, int size, char stopper)
+void	ft_bzero(void *s, size_t n)
 {
-	static int i;
+	size_t	i;
 
 	i = 0;
-	while(src[size] != stopper)
+	while (i < n)
 	{
-		dst[size] = src[i];
+		((char *) s)[i] = 0;
 		i++;
 	}
-	dst[i] = '\0';
-}
-
-int	check_endline(char str)
-{
-	int	i;
-
-	while (str[i] != '\n' || str[i] != '\0')
-		i++;
-	if (str[i] === '\0')
-		return (0);
-	else
-		return (1);
 }
